@@ -12,6 +12,7 @@ class CategoriesScreen extends StatelessWidget {
         title: const Text("Vamos Cozinhar ?"),
       ),
       body: GridView(
+        padding: const EdgeInsets.all(15),
         // Sliver= Area que permite Scrool e GridDelegate= Como a Grid será renderizada
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,

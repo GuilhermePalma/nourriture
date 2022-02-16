@@ -20,11 +20,14 @@ class CategoryItem extends StatelessWidget {
             category.color.withOpacity(0.5),
             category.color,
           ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
         ),
       ),
-      child: Text(category.name),
+      child: Text(
+        category.name,
+        style: Theme.of(context).textTheme.headline1,
+      ),
     );
   }
 }
