@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nourriture/screens/categories_meals_screen.dart';
 import 'package:nourriture/screens/categories_screen.dart';
+import 'package:nourriture/utils/app_routes.dart';
 
 void main() => runApp(const MyApp());
 
@@ -33,7 +35,13 @@ class MyApp extends StatelessWidget {
             ),
         canvasColor: const Color.fromRGBO(255, 254, 229, 1),
       ),
-      home: const CategoriesScreen(),
+      /// Define as Rotas Nomeadas e a Rota Inicial
+      routes: {
+        // Caso queira definir a rota padrão, colocar no nome apenas "/"
+        AppRoutes.homeRoute: (ctx) => const CategoriesScreen(),
+        AppRoutes.categoryMeals: (ctx) => const CategoriesMealsScreen(),
+      },
+      initialRoute: AppRoutes.homeRoute,
     );
   }
 }
