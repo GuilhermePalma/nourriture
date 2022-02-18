@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nourriture/components/image_rounded.dart';
 import 'package:nourriture/models/meal.dart';
 import 'package:nourriture/utils/app_routes.dart';
 
@@ -30,17 +31,10 @@ class MealItem extends StatelessWidget {
               // Imagem Arredondada com um Texto Sobreposto
               Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
-                    child: Image.network(
-                      meal.imageUrl,
-                      height: 250,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
+                  ImageRounded(
+                    urlImage: meal.imageUrl,
+                    radiusTop: 15,
+                    radiusBottom: 0,
                   ),
                   // Widget Positioned define onde o Widget ficará Posicionado na Stack
                   Positioned(
