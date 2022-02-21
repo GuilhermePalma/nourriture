@@ -26,6 +26,10 @@ class ImageRounded extends StatelessWidget {
         height: 250,
         width: double.infinity,
         fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          // Tratamento de Erro na Imagem
+          return Image.asset("assets/images/error_404.jpg");
+        },
       ),
     );
   }
