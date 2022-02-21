@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class ImageRounded extends StatelessWidget {
   const ImageRounded({
     Key? key,
-    required this.urlImage,
+    this.urlImage,
+    this.assetImage,
     required this.radiusTop,
     required this.radiusBottom,
   }) : super(key: key);
 
-  final String urlImage;
+  final String? assetImage;
+  final String? urlImage;
   final double radiusTop;
   final double radiusBottom;
 
@@ -21,16 +23,28 @@ class ImageRounded extends StatelessWidget {
         bottomLeft: Radius.circular(radiusBottom),
         bottomRight: Radius.circular(radiusBottom),
       ),
-      child: Image.network(
-        urlImage,
-        height: 250,
-        width: double.infinity,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) {
-          // Tratamento de Erro na Imagem
-          return Image.asset("assets/images/error_404.jpg");
-        },
-      ),
+      child: urlImage != null
+          ? Image.network(
+              urlImage!,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                // Tratamento de Erro na Imagem
+                return Image.asset("assets/images/error_404.jpg");
+              },
+            )
+          : assetImage != null
+              ? Image.asset(
+                  assetImage!,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    // Tratamento de Erro na Imagem
+                    return Image.asset("assets/images/error_404.jpg");
+                  },
+                )
+              : Image.asset(
+                  "assets/images/error_404.jpg",
+                  fit: BoxFit.cover,
+                ),
     );
   }
 }

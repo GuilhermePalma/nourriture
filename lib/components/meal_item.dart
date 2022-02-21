@@ -31,10 +31,14 @@ class MealItem extends StatelessWidget {
               // Imagem Arredondada com um Texto Sobreposto
               Stack(
                 children: [
-                  ImageRounded(
-                    urlImage: meal.imageUrl,
-                    radiusTop: 15,
-                    radiusBottom: 0,
+                  SizedBox(
+                    height: 250,
+                    width: double.infinity,
+                    child: ImageRounded(
+                      urlImage: meal.imageUrl,
+                      radiusTop: 15,
+                      radiusBottom: 0,
+                    ),
                   ),
                   // Widget Positioned define onde o Widget ficará Posicionado na Stack
                   Positioned(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nourriture/components/image_rounded.dart';
 import 'package:nourriture/utils/app_routes.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -64,10 +65,7 @@ class CustomDrawer extends StatelessWidget {
     return Container(
       height: 180,
       width: double.infinity,
-      padding: const EdgeInsets.all(20.0),
-      alignment: Alignment.bottomRight,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondary,
+      /* decoration: BoxDecoration(
         borderRadius: const BorderRadius.vertical(
           bottom: Radius.circular(10),
         ),
@@ -75,13 +73,34 @@ class CustomDrawer extends StatelessWidget {
           color: Colors.grey[600] ?? Colors.grey,
           width: 1.5,
         ),
-      ),
-      child: const Text(
-        "Vamos Cozinhar ?",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 24,
-        ),
+      ), */
+      // Exibe um Texto encima de uma Imagem
+      child: Stack(
+        fit: StackFit.expand,
+        children: const [
+          // Obtem uma Imagem com Borda
+          ImageRounded(
+            radiusTop: 0,
+            radiusBottom: 10,
+            assetImage: "assets/images/table_food.jpg",
+          ),
+          // Alinha o Texto no canto Inferior Esquerdo
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: EdgeInsets.all(14),
+              child: Text(
+                "Vamos Cozinhar ?",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "RobotoCondensed",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
