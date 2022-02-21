@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nourriture/components/custom_drawer.dart';
 import 'package:nourriture/screens/categories_screen.dart';
 import 'package:nourriture/screens/favorite_screen.dart';
+import 'package:nourriture/utils/app_routes.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({Key? key}) : super(key: key);
@@ -42,7 +43,10 @@ class _TabsScreenState extends State<TabsScreen> {
         title:
             Text(_listScreens.elementAt(_selectScreenIndex)["title"] as String),
       ),
-      drawer: const CustomDrawer(),
+      drawer: CustomDrawer(
+        // Inicia na Aba com  a Rota Inicial
+        routeName: AppRoutes.homeRoute,
+      ),
       body: _listScreens.elementAt(_selectScreenIndex)["screen"] as Widget,
       // Cria o Menu Inferior
       bottomNavigationBar: BottomNavigationBar(
