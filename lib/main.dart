@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nourriture/screens/categories_meals_screen.dart';
 import 'package:nourriture/screens/error_screen.dart';
 import 'package:nourriture/screens/meal_details_screen.dart';
-import 'package:nourriture/screens/settings_screen.dart';
+import 'package:nourriture/screens/filters_screen.dart';
 import 'package:nourriture/screens/tabs_screen.dart';
 import 'package:nourriture/utils/app_routes.dart';
 
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.homeRoute: (ctx) => const TabsScreen(),
         AppRoutes.categoryMeals: (ctx) => const CategoriesMealsScreen(),
         AppRoutes.mealDetails: (ctx) => const MealDetailsScreen(),
-        AppRoutes.settings: (ctx) => const SettingScreen(),
+        AppRoutes.filters: (ctx) => const FiltersScreen(),
       },
       initialRoute: AppRoutes.homeRoute,
       // As Rotas são acessadads pro meio da seguinte hierarquia de navegação: Rotas em 'routes',
