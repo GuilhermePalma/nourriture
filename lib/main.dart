@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:nourriture/models/filters.dart';
 import 'package:nourriture/screens/categories_meals_screen.dart';
 import 'package:nourriture/screens/error_screen.dart';
 import 'package:nourriture/screens/meal_details_screen.dart';
 import 'package:nourriture/screens/filters_screen.dart';
 import 'package:nourriture/screens/tabs_screen.dart';
 import 'package:nourriture/utils/app_routes.dart';
+import 'package:nourriture/data/dummy_data.dart';
+import 'models/meal.dart';
 
 void main() => runApp(const MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  // Variavel que armazena os Filtros e as Comidas que serão exibidas
+  Filters filters = Filters();
+  List<Meal> avalaibleMeals = dummyMeals;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +55,11 @@ class MyApp extends StatelessWidget {
       routes: {
         // Caso queira definir a rota padrão, colocar no nome apenas "/"
         AppRoutes.homeRoute: (ctx) => const TabsScreen(),
-        AppRoutes.categoryMeals: (ctx) => const CategoriesMealsScreen(),
+        AppRoutes.categoryMeals: (ctx) =>
+            CategoriesMealsScreen(avalaibleMeals: avalaibleMeals),
         AppRoutes.mealDetails: (ctx) => const MealDetailsScreen(),
-        AppRoutes.filters: (ctx) => const FiltersScreen(),
+        AppRoutes.filters: (ctx) =>
+            FiltersScreen(filters: filters, onFiltersChanged: _filterMeals),
       },
       initialRoute: AppRoutes.homeRoute,
       // As Rotas são acessadads pro meio da seguinte hierarquia de navegação: Rotas em 'routes',
@@ -53,5 +67,24 @@ class MyApp extends StatelessWidget {
       onUnknownRoute: (settings) =>
           MaterialPageRoute(builder: (_) => const ErrorScreen()),
     );
+  }
+
+  /// Metodo Responsavel por Controlar os Filtros Selecionados pelo Usuario
+  void _filterMeals(Filters filtersUpdated) {
+    setState(() {
+      filters = filtersUpdated;
+
+      avalaibleMeals = dummyMeals.where((mealItem) {
+        final filterGluten = filtersUpdated.isGlutenFree && !mealItem.isGlutenFree;
+        final filterLactose = filtersUpdated.isLactoseFree && !mealItem.isLactoseFree;
+        final filterVegan = filtersUpdated.isVegan && !mealItem.isVegan;
+        final filterVegetarian = filtersUpdated.isVegetarian && !mealItem.isVegetarian;
+
+        return !filterGluten &&
+            !filterLactose &&
+            !filterVegan &&
+            !filterVegetarian;
+      }).toList();
+    });
   }
 }

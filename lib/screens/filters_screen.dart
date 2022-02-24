@@ -4,49 +4,57 @@ import 'package:nourriture/models/filters.dart';
 import 'package:nourriture/utils/app_routes.dart';
 
 class FiltersScreen extends StatefulWidget {
-  const FiltersScreen({Key? key}) : super(key: key);
+
+  final void Function(Filters) onFiltersChanged;
+  final Filters filters;
+
+  const FiltersScreen({
+    Key? key,
+    required this.filters,
+    required this.onFiltersChanged,
+  }) : super(key: key);
 
   @override
   State<FiltersScreen> createState() => _FiltersScreenState();
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-
   // Classe Responsavel por Gerenciar os Valores do Filtro
-  final Filters filters = Filters();
+  Filters ?filters;
+
+  @override
+  void initState() {
+    super.initState();
+    filters = widget.filters;
+  }
 
   @override
   Widget build(BuildContext context) {
-
     // Lista contendo as Informações dos Switchs
     final listSwitchs = [
       {
         "title": "Sem Gluten",
         "subtitle": "Só exibe as refeições sem Gluten",
-        "value": filters.isGlutenFree,
-        "function": (isSelected) =>
-            setState(() => filters.isGlutenFree = isSelected),
+        "value": filters!.isGlutenFree,
+        "function": (isSelected) => setState(() => filters!.isGlutenFree = isSelected),
       },
       {
         "title": "Sem Lactose",
         "subtitle": "Só exibe as refeições sem Lactose",
-        "value": filters.isLactoseFree,
-        "function": (isSelected) =>
-            setState(() => filters.isLactoseFree = isSelected),
+        "value": filters!.isLactoseFree,
+        "function": (isSelected) => setState(() => filters!.isLactoseFree = isSelected),
       },
       {
         "title": "Opções Vegana",
         "subtitle": "Só exibe as refeições Veganas",
-        "value": filters.isVegan,
-        "function": (isSelected) =>
-            setState(() => filters.isVegan = isSelected),
+        "value": filters!.isVegan,
+        "function": (isSelected) => setState(() => filters!.isVegan = isSelected),
       },
       {
         "title": "Opções Vegetariana",
         "subtitle": "Só exibe as refeições Vegetarianas",
-        "value": filters.isVegetarian,
-        "function": (isSelected) =>
-            setState(() => filters.isVegetarian = isSelected),
+        "value": filters!.isVegetarian,
+        "function": (isSelected) => setState(() => filters!.isVegetarian = isSelected),
       },
     ];
 
@@ -93,7 +101,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
       title: Text(title),
       subtitle: Text(subtitle),
       value: valueSwitch,
-      onChanged: onChanged,
+      onChanged: (newValue) {
+        onChanged(newValue);
+        widget.onFiltersChanged(filters!);
+      },
     );
   }
 }

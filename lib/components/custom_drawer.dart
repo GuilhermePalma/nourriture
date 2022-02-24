@@ -19,8 +19,8 @@ class CustomDrawer extends StatelessWidget {
       "routeName": AppRoutes.homeRoute,
     },
     {
-      "title": "Configurações",
-      "icon": Icons.settings_rounded,
+      "title": "Filtros",
+      "icon": Icons.filter_alt_rounded,
       "routeName": AppRoutes.filters,
     },
   ];
