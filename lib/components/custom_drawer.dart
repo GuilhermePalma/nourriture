@@ -61,19 +61,10 @@ class CustomDrawer extends StatelessWidget {
   }
 
   /// Cria o Header do Drawer
-  Container _createNavigationHeader(BuildContext context) {
-    return Container(
+  SizedBox _createNavigationHeader(BuildContext context) {
+    return SizedBox(
       height: 180,
       width: double.infinity,
-      /* decoration: BoxDecoration(
-        borderRadius: const BorderRadius.vertical(
-          bottom: Radius.circular(10),
-        ),
-        border: Border.all(
-          color: Colors.grey[600] ?? Colors.grey,
-          width: 1.5,
-        ),
-      ), */
       // Exibe um Texto encima de uma Imagem
       child: Stack(
         fit: StackFit.expand,
@@ -106,7 +97,7 @@ class CustomDrawer extends StatelessWidget {
   }
 
   /// Cria os Itens do Menu Lateral
-  Widget _createItem(
+  ListTile _createItem(
       IconData icon, String label, bool isSelected, void Function() onTap) {
     return ListTile(
       selected: isSelected,
