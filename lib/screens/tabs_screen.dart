@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:nourriture/components/custom_drawer.dart';
+import 'package:nourriture/models/meal.dart';
 import 'package:nourriture/screens/categories_screen.dart';
 import 'package:nourriture/screens/favorite_screen.dart';
 import 'package:nourriture/utils/app_routes.dart';
 
 class TabsScreen extends StatefulWidget {
-  const TabsScreen({Key? key}) : super(key: key);
+  /// Armazena as comidas Favoritas
+  final List<Meal> favoritesMeals;
+
+  const TabsScreen({
+    Key? key,
+    required this.favoritesMeals,
+  }) : super(key: key);
 
   @override
   State<TabsScreen> createState() => _TabsScreenState();
@@ -14,24 +21,31 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   // Controla o Index da Tela/Titulo Exibido
   int _selectScreenIndex = 0;
-
   // Lista com o Titulo e Telas que serão Mostradas
-  final List<Map<String, Object>> _listScreens = [
-    {
-      // Parametros da AppBar e Body
-      "title": "Vamos Cozinhar ?",
-      "screen": const CategoriesScreen(),
-      // Parametros do Item no Menu Inferior
-      "label": "Categorias",
-      "icon": const Icon(Icons.category_rounded),
-    },
-    {
-      "title": "Comidas Favoritas",
-      "screen": const FavoriteScreen(),
-      "label": "Favoritas",
-      "icon": const Icon(Icons.star_rate_rounded)
-    },
-  ];
+  List<Map<String, Object>> _listScreens = [];
+
+  // Inicializa a Lista com as Informações das Tabs
+  @override
+  void initState() {
+    super.initState();
+
+    _listScreens = [
+      {
+        // Parametros da AppBar e Body
+        "title": "Vamos Cozinhar ?",
+        "screen": const CategoriesScreen(),
+        // Parametros do Item no Menu Inferior
+        "label": "Categorias",
+        "icon": const Icon(Icons.category_rounded),
+      },
+      {
+        "title": "Comidas Favoritas",
+        "screen": FavoriteScreen(favoriteMeals: widget.favoritesMeals),
+        "label": "Favoritas",
+        "icon": const Icon(Icons.star_rate_rounded)
+      },
+    ];
+  }
 
   /// Altera o Index do Item Selecionado
   _selectedScreen(int index) => setState(() => _selectScreenIndex = index);

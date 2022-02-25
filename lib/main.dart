@@ -22,6 +22,7 @@ class _MyAppState extends State<MyApp> {
   // Variavel que armazena os Filtros e as Comidas que serão exibidas
   Filters filters = Filters();
   List<Meal> avalaibleMeals = dummyMeals;
+  List<Meal> favoritesMeals = [];
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +55,14 @@ class _MyAppState extends State<MyApp> {
       /// Define as Rotas Nomeadas e a Rota Inicial
       routes: {
         // Caso queira definir a rota padrão, colocar no nome apenas "/"
-        AppRoutes.homeRoute: (ctx) => const TabsScreen(),
+        AppRoutes.homeRoute: (ctx) =>
+            TabsScreen(favoritesMeals: favoritesMeals),
         AppRoutes.categoryMeals: (ctx) =>
             CategoriesMealsScreen(avalaibleMeals: avalaibleMeals),
-        AppRoutes.mealDetails: (ctx) => const MealDetailsScreen(),
+        AppRoutes.mealDetails: (ctx) => MealDetailsScreen(
+              onClickFavorite: _toggleFavorites,
+              isFavoriteMeal: _isFavoriteMeal,
+            ),
         AppRoutes.filters: (ctx) =>
             FiltersScreen(filters: filters, onFiltersChanged: _filterMeals),
       },
@@ -75,10 +80,13 @@ class _MyAppState extends State<MyApp> {
       filters = filtersUpdated;
 
       avalaibleMeals = dummyMeals.where((mealItem) {
-        final filterGluten = filtersUpdated.isGlutenFree && !mealItem.isGlutenFree;
-        final filterLactose = filtersUpdated.isLactoseFree && !mealItem.isLactoseFree;
+        final filterGluten =
+            filtersUpdated.isGlutenFree && !mealItem.isGlutenFree;
+        final filterLactose =
+            filtersUpdated.isLactoseFree && !mealItem.isLactoseFree;
         final filterVegan = filtersUpdated.isVegan && !mealItem.isVegan;
-        final filterVegetarian = filtersUpdated.isVegetarian && !mealItem.isVegetarian;
+        final filterVegetarian =
+            filtersUpdated.isVegetarian && !mealItem.isVegetarian;
 
         return !filterGluten &&
             !filterLactose &&
@@ -87,4 +95,16 @@ class _MyAppState extends State<MyApp> {
       }).toList();
     });
   }
+
+  /// Controla a lista das comidas Favoritadas
+  void _toggleFavorites(Meal meal) {
+    setState(() {
+      favoritesMeals.contains(meal)
+          ? favoritesMeals.remove(meal)
+          : favoritesMeals.add(meal);
+    });
+  }
+
+  /// Retorna se uma comida foi ou não favoritada
+  bool _isFavoriteMeal(Meal meal) => favoritesMeals.contains(meal);
 }

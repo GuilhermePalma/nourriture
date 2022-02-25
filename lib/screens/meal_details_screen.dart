@@ -3,10 +3,21 @@ import 'package:nourriture/components/image_rounded.dart';
 import 'package:nourriture/models/meal.dart';
 
 class MealDetailsScreen extends StatelessWidget {
-  const MealDetailsScreen({Key? key}) : super(key: key);
+  /// Trata o Clique no Botão de Favoritar
+  final void Function(Meal) onClickFavorite;
+
+  /// Verifica se a comida é Favorita
+  final bool Function(Meal) isFavoriteMeal;
+
+  const MealDetailsScreen({
+    Key? key,
+    required this.onClickFavorite,
+    required this.isFavoriteMeal,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    /// Obtem o Item Passado pela Rota
     final mealItem = ModalRoute.of(context)?.settings.arguments as Meal;
 
     // Cria uma Lista de Widgets dos Ingredientes
@@ -68,6 +79,15 @@ class MealDetailsScreen extends StatelessWidget {
             _sectionItems(context, stepWidget),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        // Diferencia o Estado do Clique nos Itens
+        child: Icon(
+          isFavoriteMeal(mealItem)
+              ? Icons.star_rounded
+              : Icons.star_border_rounded,
+        ),
+        onPressed: () => onClickFavorite(mealItem),
       ),
     );
   }
